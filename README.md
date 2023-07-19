@@ -11,7 +11,7 @@ Base project to work with the Python Flask framework in an easy way.
 
 ## Set `.env` file in root with:
 
-Create an `.env` file in the root of the project with this information. It is important to obtain a token in Zenodo first.
+Create an `.env` file in the root of the project with this information.
 
 ```
 FLASK_APP_NAME=flask_base
