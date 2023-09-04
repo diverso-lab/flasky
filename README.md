@@ -30,7 +30,7 @@ To deploy the software under development environment, run:
 docker compose -f docker-compose.dev.yml up -d 
 ```
 
-This will apply the migrations to the database and run the Flask application. 
+This will apply the migrations to the database and run the Flask application. Open `http://localhost` to play with your fantastic app!
 
 ### Migrations
 
@@ -53,4 +53,18 @@ pytest app/tests/units.py
 
 ```
 docker compose -f docker-compose.prod.yml up -d 
+```
+
+## SSL certificates
+
+To generate a new certificate, run in deploy server: 
+
+```
+chmod +x ssl_setup.sh && ./ssl_setup.sh
+```
+
+To renew a certificate that is less than 60 days from expiry, execute in deploy server:
+
+```
+chmod +x ssl_renew.sh && ./ssl_renew.sh
 ```
