@@ -22,14 +22,14 @@ cp .env.docker.example .env
 To deploy the software under development environment, run:
 
 ```
-docker compose -f docker-compose.dev.yml up -d 
+docker compose -f docker/docker-compose.dev.yml up -d 
 ```
 
 This will apply the migrations to the database and run the Flask application. Open `http://localhost` to play with your fantastic app!
 
 ### Migrations
 
-However, if during development there are new changes in the model, run inside the `web` container:
+However, if during development there are new changes in the model, run inside the `web_app_container` container:
 
 ```
 flask db migrate
@@ -38,38 +38,14 @@ flask db upgrade
 
 ### Tests
 
-To run unit test, please enter inside `web` container:
+To run unit test, please enter inside `web_app_container` container:
 
 ```
-pytest app/tests/units.py
+rosemary test
 ```
 
 ## Deploy in production (Docker Compose)
 
 ```
-docker compose -f docker-compose.prod.yml up -d 
+docker compose -f docker/docker-compose.prod.yml up -d 
 ```
-
-## SSL certificates
-
-To generate a new certificate, run in deploy server: 
-
-```
-chmod +x ssl_setup.sh && ./ssl_setup.sh
-```
-
-To renew a certificate that is less than 60 days from expiry, execute in deploy server:
-
-```
-chmod +x ssl_renew.sh && ./ssl_renew.sh
-```
-
-## Update dependencies
-
-To update all project dependencies automatically, run:
-
-```
-chmod +x update_dependencies.sh && ./update_dependencies.sh
-```
-
-Note: it is the responsibility of the developer to check that the update of the dependencies has not broken any functionality and each dependency maintains backwards compatibility. Use the script with care!
