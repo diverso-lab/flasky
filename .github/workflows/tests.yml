@@ -1,35 +1,37 @@
-name: Flask CI
+name: Run tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main, develop]
 
 jobs:
-  build:
-
+  pytest:
     runs-on: ubuntu-latest
 
     services:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: flask_base_root_pass
-          MYSQL_DATABASE: flask_base_db
-          MYSQL_USER: flask_base_user
-          MYSQL_PASSWORD: flask_base_pass
+          MYSQL_ROOT_PASSWORD: boilerplate_root_password
+          MYSQL_DATABASE: boilerplatedb_test
+          MYSQL_USER: boilerplate_user
+          MYSQL_PASSWORD: boilerplate_password
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v2
+    - uses: actions/setup-python@v5
       with:
-        python-version: 3.9
+        python-version: '3.12'
+
+    - name: Prepare environment
+      run: |
+        sed -i '/rosemary @ file:\/\/\/app/d' requirements.txt
 
     - name: Install dependencies
       run: |
@@ -37,10 +39,12 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run Tests
+      env:
+        FLASK_ENV: testing
+        MARIADB_HOSTNAME: 127.0.0.1
+        MARIADB_PORT: 3306
+        MARIADB_TEST_DATABASE: boilerplatedb_test
+        MARIADB_USER: boilerplate_user
+        MARIADB_PASSWORD: boilerplate_password
       run: |
-        export MYSQL_HOSTNAME=127.0.0.1
-        export MYSQL_PORT=3306
-        export MYSQL_DATABASE=flask_base_db
-        export MYSQL_USER=flask_base_user
-        export MYSQL_PASSWORD=flask_base_pass
-        pytest app/tests/units.py
+        pytest app/modules/ --ignore-glob='*selenium*'

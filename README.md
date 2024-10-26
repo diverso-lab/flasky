@@ -14,12 +14,7 @@ Base project to work with the Python Flask framework in an easy way.
 Create an `.env` file in the root of the project with this information.
 
 ```
-FLASK_APP_NAME=flask_base
-MYSQL_HOSTNAME=db
-MYSQL_DATABASE=flask_base_db
-MYSQL_USER=flask_base_user
-MYSQL_PASSWORD=flask_base_pass
-MYSQL_ROOT_PASSWORD=flask_base_root_pass
+cp .env.docker.example .env
 ```
 
 ## Deploy in develop
