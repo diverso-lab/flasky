@@ -13,18 +13,20 @@ class User(db.Model, UserMixin):
 
     email = db.Column(db.String(256), unique=True, nullable=True)
     password = db.Column(db.String(256), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(pytz.utc))
+    created_at = db.Column(
+        db.DateTime, nullable=False, default=lambda: datetime.now(pytz.utc)
+    )
 
-    profile = db.relationship('UserProfile', backref='user', uselist=False)
+    profile = db.relationship("UserProfile", backref="user", uselist=False)
     active = db.Column(db.Boolean, default=True, nullable=False)
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
-        if 'password' in kwargs:
-            self.set_password(kwargs['password'])
+        if "password" in kwargs:
+            self.set_password(kwargs["password"])
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f"<User {self.email}>"
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -34,4 +36,5 @@ class User(db.Model, UserMixin):
 
     def temp_folder(self) -> str:
         from app.modules.auth.services import AuthenticationService
+
         return AuthenticationService().temp_folder_by_user(self)

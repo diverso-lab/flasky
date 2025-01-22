@@ -10,7 +10,9 @@ class BaseSeeder:
         self.db = db
 
     def run(self):
-        raise NotImplementedError("The 'run' method must be implemented by the child class.")
+        raise NotImplementedError(
+            "The 'run' method must be implemented by the child class."
+        )
 
     def json_serializer(self, obj):
         """Helper function to convert non-serializable objects like datetime."""
@@ -39,7 +41,9 @@ class BaseSeeder:
                 obj_dict = obj.__dict__.copy()
                 for key, value in obj_dict.items():
                     if isinstance(value, datetime):
-                        obj_dict[key] = value.isoformat()  # Convert datetime to ISO format
+                        obj_dict[key] = (
+                            value.isoformat()
+                        )  # Convert datetime to ISO format
                 # Optional: Log serialized objects for debugging
                 # print(json.dumps(obj_dict, default=self.json_serializer))
 
@@ -48,7 +52,9 @@ class BaseSeeder:
 
         except IntegrityError as e:
             self.db.session.rollback()
-            raise Exception(f"Failed to insert data into `{model.__tablename__}` table. Error: {e}")
+            raise Exception(
+                f"Failed to insert data into `{model.__tablename__}` table. Error: {e}"
+            )
 
         # After committing, the `data` objects should have their IDs assigned.
         return data

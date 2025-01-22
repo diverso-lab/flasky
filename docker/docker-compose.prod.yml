@@ -2,7 +2,7 @@ services:
 
   web:
     container_name: web_app_container
-    image: drorganvidez/boilerplate:latest
+    image: drorganvidez/uvlhub:latest
     env_file:
       - ../.env
     expose:
@@ -21,7 +21,7 @@ services:
       - ../.moduleignore:/app/.moduleignore
     command: [ "bash", "-c", "bash /app/entrypoint.sh" ]
     networks:
-      - boilerplate_network
+      - uvlhub_network
 
   db:
     container_name: mariadb_container
@@ -35,7 +35,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     networks:
-      - boilerplate_network
+      - uvlhub_network
 
   nginx:
     container_name: nginx_web_server_container
@@ -49,14 +49,14 @@ services:
       - web
     restart: always
     networks:
-      - boilerplate_network
+      - uvlhub_network
 
   redis:
     image: "redis:latest"
     container_name: redis_container
     restart: always
     networks:
-      - boilerplate_network
+      - uvlhub_network
 
   worker:
     container_name: rq_worker_container
@@ -72,7 +72,7 @@ services:
       - ../core/:/app/core
       - ../uploads/:/app/uploads
     networks:
-      - boilerplate_network
+      - uvlhub_network
 
   watchtower:
     container_name: watchtower_container
@@ -82,12 +82,12 @@ services:
     command: --cleanup --interval 120 web_app_container
     restart: always
     networks:
-      - boilerplate_network
+      - uvlhub_network
 
 volumes:
   db_data:
 
 networks:
-  boilerplate_network:
+  uvlhub_network:
     driver: bridge
-    name: boilerplate_network
+    name: uvlhub_network

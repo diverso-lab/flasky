@@ -2,7 +2,7 @@ services:
 
   web:
     container_name: web_app_container
-    image: drorganvidez/boilerplate:dev
+    image: drorganvidez/uvlhub:dev
     env_file:
       - ../.env
     expose:
@@ -20,7 +20,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: [ "bash", "-c", "bash /app/docker/entrypoints/development_entrypoint.sh" ]
     networks:
-      - boilerplate_network
+      - uvlhub_network
 
   db:
     container_name: mariadb_container
@@ -34,7 +34,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     networks:
-      - boilerplate_network
+      - uvlhub_network
 
   nginx:
     container_name: nginx_web_server_container
@@ -47,14 +47,13 @@ services:
     depends_on:
       - web
     networks:
-      - boilerplate_network
+      - uvlhub_network
 
   redis:
     image: "redis:latest"
     container_name: redis_container
-    restart: always
     networks:
-      - boilerplate_network
+      - uvlhub_network
 
   worker:
     container_name: rq_worker_container
@@ -70,12 +69,12 @@ services:
       - ../core/:/app/core
       - ../uploads/:/app/uploads
     networks:
-      - boilerplate_network
+      - uvlhub_network
 
 volumes:
   db_data:
 
 networks:
-  boilerplate_network:
+  uvlhub_network:
     driver: bridge
-    name: boilerplate_network
+    name: uvlhub_network

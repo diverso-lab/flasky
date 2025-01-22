@@ -20,7 +20,12 @@ def edit_profile():
         service = UserProfileService()
         result, errors = service.update_profile(profile.id, form)
         return service.handle_service_response(
-            result, errors, "profile.edit_profile", "Profile updated successfully", "profile/edit.html", form
+            result,
+            errors,
+            "profile.edit_profile",
+            "Profile updated successfully",
+            "profile/edit.html",
+            form,
         )
 
     return render_template("profile/edit.html", form=form, profile=profile)
