@@ -5,7 +5,7 @@
   
 </div>
 
-# flask_boilerplate
+# Flasky framework
 
 Base project to work with the Python Flask framework in an easy way.
 
@@ -22,7 +22,7 @@ cp .env.docker.example .env
 To deploy the software under development environment, run:
 
 ```
-docker compose -f docker/docker-compose.dev.yml up -d 
+make -C docker dev-build
 ```
 
 This will apply the migrations to the database and run the Flask application. Open `http://localhost` to play with your fantastic app!
@@ -47,5 +47,5 @@ rosemary test
 ## Deploy in production (Docker Compose)
 
 ```
-docker compose -f docker/docker-compose.prod.yml up -d 
+make -C docker prod
 ```

@@ -49,3 +49,6 @@ deployments.log
 
 # Node.js dependencies
 node_modules/
+
+Dockerfile.merged
+.last_env

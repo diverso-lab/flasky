@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.scripts]
-rosemary = "rosemary.cli:cli"
+rosemary = "rosemary.__main__:main"
 
 [tool.setuptools]
 packages = ["rosemary"]

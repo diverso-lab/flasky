@@ -14,10 +14,10 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: boilerplate_root_password
-          MYSQL_DATABASE: boilerplatedb_test
-          MYSQL_USER: boilerplate_user
-          MYSQL_PASSWORD: boilerplate_password
+          MYSQL_ROOT_PASSWORD: flasky_root_password
+          MYSQL_DATABASE: flaskydb_test
+          MYSQL_USER: flasky_user
+          MYSQL_PASSWORD: flasky_password
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -43,8 +43,8 @@ jobs:
         FLASK_ENV: testing
         MARIADB_HOSTNAME: 127.0.0.1
         MARIADB_PORT: 3306
-        MARIADB_TEST_DATABASE: boilerplatedb_test
-        MARIADB_USER: boilerplate_user
-        MARIADB_PASSWORD: boilerplate_password
+        MARIADB_TEST_DATABASE: flaskydb_test
+        MARIADB_USER: flasky_user
+        MARIADB_PASSWORD: flasky_password
       run: |
         pytest app/modules/ --ignore-glob='*selenium*'

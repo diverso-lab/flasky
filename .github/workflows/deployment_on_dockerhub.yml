@@ -18,8 +18,9 @@ jobs:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
+      
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
@@ -27,17 +28,26 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
-        run: docker build --build-arg VERSION_TAG=${{ github.event.release.tag_name }} -t drorganvidez/boilerplate:${{ github.event.release.tag_name }} -f docker/images/Dockerfile.prod .
-        env:
-          DOCKER_CLI_EXPERIMENTAL: enabled
-
-      - name: Push Docker image to Docker Hub
-        run: docker push drorganvidez/boilerplate:${{ github.event.release.tag_name }}
-
-      - name: Tag and push latest
+      - name: Generate combined Dockerfile
         run: |
-          docker tag drorganvidez/boilerplate:${{ github.event.release.tag_name }} drorganvidez/boilerplate:latest
-          docker push drorganvidez/boilerplate:latest
-        env:
-          DOCKER_CLI_EXPERIMENTAL: enabled
+          set -e
+          echo "### Generating unified Dockerfile ###"
+
+          if [ ! -f docker/images/Dockerfile.base ] || [ ! -f docker/images/Dockerfile.prod ]; then
+            echo "❌ ERROR: Dockerfile.base or Dockerfile.prod not found!"
+            exit 1
+          fi
+
+          cat docker/images/Dockerfile.base > docker/images/Dockerfile.merged
+          echo "" >> docker/images/Dockerfile.merged
+          grep -v '^FROM base' docker/images/Dockerfile.prod >> docker/images/Dockerfile.merged
+
+      - name: Build and push Docker image to DockerHub
+        run: |
+          docker build --build-arg VERSION_TAG=${{ github.event.release.tag_name }} -t drorganvidez/flasky:${{ github.event.release.tag_name }} -f docker/images/Dockerfile.merged .
+          docker push drorganvidez/flasky:${{ github.event.release.tag_name }}
+
+      - name: Tag and push latest to Docker Hub
+        run: |
+          docker tag drorganvidez/flasky:${{ github.event.release.tag_name }} drorganvidez/flasky:latest
+          docker push drorganvidez/flasky:latest

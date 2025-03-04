@@ -76,7 +76,7 @@ def locust(module):
             "--name",
             "locust_container",
             "--network",
-            "uvlhub_network",
+            "docker_flasky_network",
             "locust-image",
             "-f",
             locustfile_path,

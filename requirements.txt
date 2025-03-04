@@ -1,8 +1,5 @@
-afmparser==1.0.3
 alembic==1.14.1
 aniso8601==10.0.0
-antlr4-python3-runtime==4.13.1
-astutils==0.0.6
 attrs==24.3.0
 Authlib==1.4.0
 beautifulsoup4==4.12.3
@@ -25,11 +22,6 @@ docker==7.1.0
 email_validator==2.2.0
 Faker==33.3.1
 flake8==7.1.1
-flamapy==2.0.1
-flamapy-bdd==2.0.1
-flamapy-fm==2.0.1
-flamapy-fw==2.0.1
-flamapy-sat==2.0.1
 Flask==3.1.0
 Flask-Cors==5.0.0
 Flask-Login==0.6.3
@@ -82,7 +74,6 @@ pytest==8.3.4
 pytest-cov==6.0.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
-python-sat==0.1.8.dev17
 pytz==2024.2
 pyzmq==26.2.0
 redis==5.2.1
