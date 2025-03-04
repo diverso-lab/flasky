@@ -60,11 +60,6 @@ class RosemaryCLI(click.Group):
         return rv
 
 
-@click.group(cls=RosemaryCLI)
-def cli():
-    """A CLI tool to help with project development."""
-
-
 def load_commands(cli_group, commands_dir="rosemary/commands"):
     """
     Dynamically import all commands in the specified directory and add them to the CLI group.
@@ -78,3 +73,8 @@ def load_commands(cli_group, commands_dir="rosemary/commands"):
                 attr = getattr(module, attr_name)
                 if isinstance(attr, click.Command):
                     cli_group.add_command(attr)
+
+
+@click.group(cls=RosemaryCLI)
+def cli():
+    """A CLI tool to help with project development."""
