@@ -5,9 +5,9 @@
   
 </div>
 
-# Flasky framework
+# Flasky SPL framework
 
-Base project to work with the Python Flask framework in an easy way.
+Base project to work with the Flasky SPL framework in an easy way.
 
 ## Set `.env` file in root with:
 
